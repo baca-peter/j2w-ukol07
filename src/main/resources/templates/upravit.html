@@ -11,7 +11,8 @@
 </head>
 <body>
 <div class="detail">
-    <form class="vizitka" th:action="@{/nova}" method="post" novalidate>
+    <form class="vizitka" th:action="@{/upravit}" method="post" novalidate>
+        <input name="id" type="hidden" th:value="${id}"/>
         <div class="row">
             <label for="celeJmeno">Jméno</label>
             <input type="text" id="celeJmeno" name="celeJmeno" th:field="${vizitka.celeJmeno}" />

@@ -5,30 +5,54 @@
     <title>Vizitkovník</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet"
+          href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="icon" type="image/png" href="/images/favicon.png">
 </head>
 <body>
 <div class="detail">
     <div class="vizitka">
-        <div class="jmeno">Dita (Přikrylová) Formánková</div>
-        <div class="firma">Czechitas z. s.</div>
+        <div class="jmeno" th:text="${vizitka.celeJmeno}">Dita (Přikrylová) Formánková</div>
+        <div class="firma" th:text="${vizitka.firma}">Czechitas z. s.</div>
         <div class="udaje">
             <div class="adresa">
-                <div>Václavské náměstí 837/11</div>
-                <div><span>11000</span> <span>Praha 1</span></div>
+                <div th:text="${vizitka.ulice}">Václavské náměstí 837/11</div>
+                <div><span th:text="${vizitka.psc}">11000</span> <span th:text="${vizitka.obec}">Praha 1</span></div>
             </div>
             <div class="kontakty">
-                <div><i class="las la-at"></i> <span>dita@czechitas.cs</span></div>
-                <div><i class="las la-phone-alt"></i> <span>+420 800123456</span></div>
-                <div><i class="las la-globe"></i> <span>www.czechitas.cz</span></div>
+                <div th:if="${vizitka.email} != null"><i class="las la-at"></i> <span th:text="${vizitka.email}">dita@czechitas.cs</span>
+                </div>
+                <div th:if="${vizitka.telefon} != null"><i class="las la-phone-alt"></i> <span
+                        th:text="${vizitka.telefon}">+420 800123456</span></div>
+                <div th:if="${vizitka.web} != null"><i class="las la-globe"></i> <span th:text="${vizitka.web}">www.czechitas.cz</span>
+                </div>
             </div>
         </div>
     </div>
+    <div class="vizitka">
+        <h5 class="mt-5 mb-3"><p class="text-center">Vymazať vizitku</p></h5>
+        <form class="row g-3" th:action="@{/detail}" method="post">
+            <input name="id" type="hidden" th:value="${vizitka.id}"/>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Vymazať</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="vizitka">
+        <h5 class="mt-5 mb-3"><p class="text-center">Upraviť vizitku</p></h5>
+        <form class="row g-3" th:action="@{/upravit}" method="get">
+            <input name="id" type="hidden" th:value="${vizitka.id}"/>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Upraviť</button>
+            </div>
+        </form>
+    </div>
 
     <div class="mapa">
-        <iframe style="border:none" src="https://frame.mapy.cz/?q=Václavské náměstí 837/11, Praha" width="100%" height="100%" frameborder="0"></iframe>
+        <iframe style="border:none" th:src="@{https://frame.mapy.cz/(q=${vizitka.celaAdresa})}" width="100%"
+                height="100%" frameborder="0"></iframe>
     </div>
 
     <nav>
